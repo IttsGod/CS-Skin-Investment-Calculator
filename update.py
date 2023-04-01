@@ -3,7 +3,7 @@ import requests
 import openpyxl
 from bs4 import BeautifulSoup
 from openpyxl import load_workbook
-from openpyxl.styles import PatternFill
+from openpyxl.styles import PatternFill, numbers
 from forex_python.converter import CurrencyRates
 
 def convert_usd_to_eur(price_usd):
@@ -37,6 +37,7 @@ currency_converter = CurrencyRates()
 session = requests.Session()
 
 # Iterate through the rows, starting from the second row (skipping the header)
+total_profit = 0
 for row in range(2, worksheet.max_row + 1):
     skin_name = worksheet.cell(row=row, column=1).value
 
@@ -45,29 +46,25 @@ for row in range(2, worksheet.max_row + 1):
         print(price_eur)
         if price_eur is not None:
             price_eur = round(price_eur, 2)
-            worksheet.cell(row=row, column=4, value=price_eur)
+            cell = worksheet.cell(row=row, column=4, value=price_eur)
+            cell.number_format = '#,##0.00\ "€";[Red]\-#,##0.00\ "€"'
 
             purchase_price = worksheet.cell(row=row, column=3).value
             profit = price_eur - purchase_price
-            worksheet.cell(row=row, column=5, value=profit)
-            if profit > 0:
-                fill = PatternFill(start_color="00FF00", end_color="00FF00", fill_type="solid")
-            else:
-                fill = PatternFill(start_color="FF0000", end_color="FF0000", fill_type="solid")
-
-            worksheet.cell(row=row, column=5).fill = fill
+            profit_cell = worksheet.cell(row=row, column=5, value=profit)
+            profit_cell.number_format = '#,##0.00\ "€";[Red]\-#,##0.00\ "€"'
             amount = worksheet.cell(row=row, column=2).value
-            total_profit = profit*amount
-            worksheet.cell(row=row, column=6, value=total_profit)
-            if total_profit > 0:
-                fill = PatternFill(start_color="00FF00", end_color="00FF00", fill_type="solid")
-            else:
-                fill = PatternFill(start_color="FF0000", end_color="FF0000", fill_type="solid")
+            total_profit_per_item = profit * amount
+            total_profit += total_profit_per_item
+            total_profit_cell = worksheet.cell(row=row, column=6, value=total_profit_per_item)
+            total_profit_cell.number_format = '#,##0.00\ "€";[Red]\-#,##0.00\ "€"'
 
-            worksheet.cell(row=row, column=6).fill = fill
 
         else:
             worksheet.cell(row=row, column=4, value="Not Found")
+
+all_total_profit_cell = worksheet.cell(row=2, column=7, value=total_profit)
+all_total_profit_cell.number_format = '#,##0.00\ "€";[Red]\-#,##0.00\ "€"'
 
 # Save the updated Excel file
 workbook.save(excel_file_path)
