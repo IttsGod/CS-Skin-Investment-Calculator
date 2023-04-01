@@ -5,7 +5,8 @@ A Program to automatically keep track of your CounterStrike Investments
 The Program uses the Steam Community Market page to track the Value of the Item, and uses the user input buy price to calculate the profit per item and total profit.
 
 
-##Usage
+## Usage
+
 Download the update.exe
 Now, create a Excel file containing your investments, Amounts and the buy price. Make sure the item name is the exact item name, otherwise it wont work!
 The file should be called Investments.xlsx and should be in the same folder as your executable.
