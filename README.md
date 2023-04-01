@@ -23,8 +23,8 @@ Run the executable. If everything was successfull, it should look like this:
 First, make sure you have Python 3 and pip installed.
 Then install the required packages
 
-Open your cmd and execute the following commands:
-pip install requests beautifulsoup4 openpyxl forex-python
+Open your cmd and execute the following command:
+`pip install requests beautifulsoup4 openpyxl forex-python`
 
 Now do the Steps required for the Excel file above
 Then, run the update.py file
