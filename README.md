@@ -7,9 +7,11 @@ The Program uses the Steam Community Market page to track the Value of the Item,
 
 ## Usage
 
-Download the update.exe
+Download the update.exe, and the settings.txt files
+
 Now, create a Excel file containing your investments, Amounts and the buy price. Make sure the item name is the exact item name, otherwise it wont work!
-The file should be called Investments.xlsx and should be in the same folder as your executable.
+Edit the settings.txt file to change your language or Excel file name
+The Excel file should be in the same folder as your executable.
 
 Use the Example File or create your own Excel File. It should look like this:
 
