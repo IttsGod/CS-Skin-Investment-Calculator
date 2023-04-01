@@ -16,7 +16,7 @@ pip install requests beautifulsoup4 openpyxl forex-python
 Now, create a Excel File Containing your Investments, Amounts and the Buy Price. Make sure the Item Name is the exact Item Name, otherwise it wont work!
 
 Then, create a Excel File Called Investments.xlsx and put it in the same Folder as the Python Script.
-Edit it and put your investments in. It should look like this after you did that:
+Use the Example File or create your own Excel File. It should look like this:
 
 ![image](https://user-images.githubusercontent.com/91871891/229320140-3243f65e-8bda-485e-94af-a21a0ee247d3.png)
 
