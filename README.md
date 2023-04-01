@@ -1,6 +1,6 @@
 # CSSkins
 
-A Program to automatically keep Track of your CounterStrike Investments
+A Program to automatically keep track of your CounterStrike Investments
 
 The Program uses the Steam Community Market Page to track the Value of the Item, and uses the user input Buy Price to calculate the Profit per Item and total Profit.
 
