@@ -6,11 +6,13 @@ from openpyxl import load_workbook
 from openpyxl.styles import PatternFill, numbers
 from forex_python.converter import CurrencyRates
 
+language = "german"
+
 def convert_usd_to_eur(price_usd):
     return currency_converter.convert('USD', 'EUR', price_usd)
 
 def get_skin_price_eur(skin_name, session):
-    search_url = f"https://steamcommunity.com/market/search?l=german&category_730_ItemSet%5B%5D=any&q={skin_name}"
+    search_url = f"https://steamcommunity.com/market/search?l={language}&category_730_ItemSet%5B%5D=any&q={skin_name}"
     response = session.get(search_url)
     soup = BeautifulSoup(response.text, 'html.parser')
     items = soup.find_all('a', class_='market_listing_row_link')
@@ -27,7 +29,7 @@ def get_skin_price_eur(skin_name, session):
     return None
 
 # Load the existing Excel file
-excel_file_path = os.path.join(os.getcwd(), "investments.xlsx")
+excel_file_path = os.path.join(os.getcwd(), "Investments.xlsx")
 workbook = load_workbook(excel_file_path)
 worksheet = workbook.active
 
@@ -43,7 +45,6 @@ for row in range(2, worksheet.max_row + 1):
 
     if skin_name:
         price_eur = get_skin_price_eur(skin_name, session)
-        print(price_eur)
         if price_eur is not None:
             price_eur = round(price_eur, 2)
             cell = worksheet.cell(row=row, column=4, value=price_eur)
@@ -62,6 +63,7 @@ for row in range(2, worksheet.max_row + 1):
 
         else:
             worksheet.cell(row=row, column=4, value="Not Found")
+            print("Couldnt find Price for Item: " + skin_name + ". Please make sure that the Item Name returns a search result for you, and if it happens for many Items, try again in 5 Minutes")
 
 all_total_profit_cell = worksheet.cell(row=2, column=7, value=total_profit)
 all_total_profit_cell.number_format = '#,##0.00\ "€";[Red]\-#,##0.00\ "€"'
