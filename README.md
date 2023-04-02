@@ -11,7 +11,13 @@ It does not require or send any User / Account Data, and converts the currency
 Download the update.exe, and the settings.txt files
 
 Now, create a Excel file containing your investments, Amounts and the buy price. Make sure the item name is the exact item name, otherwise it wont work!
-Edit the settings.txt file to change your language or Excel file name
+
+### Settings Syntax
+
+The following Settings can be changed in the settings.txt file
+language: The written Language, examples are: english, german, french, etc.
+file_name: The name of the file (and the location, if your file is one directory above your script, you can use ..\filename.xlsx for example)
+currency: The Currency the Program checks. Currently supported: USD, GBP, EUR
 The Excel file should be in the same folder as your executable.
 
 Use the Example File or create your own Excel File. It should look like this:
