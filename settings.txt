@@ -1,0 +1,3 @@
+language=english
+file_name=Investments.xlsx
+currency=EUR
