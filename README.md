@@ -3,6 +3,7 @@
 A Program to automatically keep track of your CounterStrike Investments
 
 The Program uses the Steam Community Market page to track the Value of the Item, and uses the user input buy price to calculate the profit per item and total profit.
+It does not require or send any User / Account Data, and converts the currency 
 
 
 ## Usage
