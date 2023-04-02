@@ -8,7 +8,7 @@ It does not require or send any User / Account Data, and converts the currency
 
 ## Usage
 
-Download the update.exe, and the settings.txt files
+Download the update.exe, and the settings.txt files from the latest release.
 
 Now, create a Excel file containing your investments, Amounts and the buy price. Make sure the item name is the exact item name, otherwise it wont work!
 
