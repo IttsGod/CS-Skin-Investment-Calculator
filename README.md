@@ -16,6 +16,8 @@ Now, create a Excel file containing your investments, Amounts and the buy price.
 
 The following Settings can be changed in the settings.txt file
 
+language: The language in which the items are listed. Examples are English, German, French, etc. 
+
 file_name: The name of the file (and the location, if your file is one directory above your script, you can use ..\filename.xlsx for example)
 
 currency: The Currency the Program checks. Currently supported: USD, GBP, EUR
@@ -38,7 +40,7 @@ First, make sure you have Python 3 and pip installed.
 Then install the required packages
 
 Open your cmd and execute the following command:
-`pip install requests openpyxl urllib`
+`pip install requests openpyxl urllib beautifulsoup4 re`
 
 Now do the Steps required for the Excel file above
 Then, run the update.py file
