@@ -1,4 +1,4 @@
-# CSSkins
+# CS Investment Calculator
 
 A Program to automatically keep track of your CounterStrike Investments
 
