@@ -3,6 +3,7 @@ import requests
 import openpyxl
 import urllib.parse
 import re
+import time
 from bs4 import BeautifulSoup
 from openpyxl import load_workbook
 from openpyxl.styles import PatternFill, numbers
@@ -68,12 +69,13 @@ total_profit = 0
 for row in range(2, worksheet.max_row  + 1):
     skin_name = worksheet.cell(row=row, column=1).value
     if skin_name is not None:
-        skin_name = urllib.parse.quote(skin_name)
-        market_hash_name = get_market_hash_name(skin_name, session)
+        parse_skin_name = urllib.parse.quote(skin_name)
+        market_hash_name = get_market_hash_name(parse_skin_name, session)
+        time.sleep(3)  # Add delay after get_market_hash_name
         if market_hash_name is not None:
             market_hash_name = urllib.parse.quote(market_hash_name)
             price = get_skin_price(market_hash_name, session)
-            # rest of the code
+            time.sleep(3)  # Add delay after get_skin_price
             if price is not None:
                 cell = worksheet.cell(row=row, column=4, value=price)
                 cell.number_format = f'#,##0.00\ "{currency_token}";[Red]\-#,##0.00\ "{currency_token}"'
@@ -86,11 +88,14 @@ for row in range(2, worksheet.max_row  + 1):
                 total_profit += total_profit_per_item
                 total_profit_cell = worksheet.cell(row=row, column=6, value=total_profit_per_item)
                 total_profit_cell.number_format = f'#,##0.00\ "{currency_token}";[Red]\-#,##0.00\ "{currency_token}"'
+                print("Successfully got Price for " + skin_name)
 
 
             else:
                 worksheet.cell(row=row, column=4, value="Not Found")
                 print("Couldnt find Price for Item: " + skin_name + ". Please check your Spelling, and if this happens often, try again in 2 Minutes")
+        else:
+            print("Couldnt find Price for Item: " + skin_name + ". Please check your Spelling, and if this happens often, try again in 2 Minutes")
 
 all_total_profit_cell = worksheet.cell(row=2, column=7, value=total_profit)
 all_total_profit_cell.number_format = f'#,##0.00\ "{currency_token}";[Red]\-#,##0.00\ "{currency_token}"'
