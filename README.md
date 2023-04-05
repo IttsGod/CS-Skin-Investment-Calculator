@@ -1,4 +1,6 @@
 # CS Investment Calculator
+First of all, if you have any Questions, please feel free to DM me on Discord about them. My Discord is Arik_#9099
+
 
 A Program to automatically keep track of your CounterStrike Investments
 
