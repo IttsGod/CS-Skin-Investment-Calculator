@@ -1,3 +1,4 @@
 language=english
 file_name=Investments.xlsx
 currency=EUR
+update_hours=24

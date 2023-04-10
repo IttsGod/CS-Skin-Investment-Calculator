@@ -11,6 +11,7 @@ from datetime import datetime, timedelta
 
 #Global Variable Declaration
 global language
+global update_hours
 global file_name
 global currency
 global currency_code
@@ -24,6 +25,8 @@ with open('settings.txt', 'r') as f:
             file_name = line.split('=')[1].strip()
         elif line.startswith('currency'):
             currency = line.split('=')[1].strip()
+        elif line.startswith('update_hours'):
+            update_hours = int(line.split('=')[1].strip())
 
 if currency.casefold() == "usd":
     currency_code = 1
@@ -91,7 +94,7 @@ for row in range(2, worksheet.max_row + 1):
         update_price = True
         if last_updated is not None:
             time_since_last_update = datetime.now() - last_updated
-            if time_since_last_update.total_seconds() < timedelta(hours=24).total_seconds():
+            if time_since_last_update.total_seconds() < timedelta(hours=update_hours).total_seconds():
                 update_price = False
         if update_price:
             if market_hash_name is None:
@@ -111,7 +114,7 @@ for row in range(2, worksheet.max_row + 1):
             if market_hash_name is not None:
                 market_hash_name = urllib.parse.quote(market_hash_name)
                 price = get_skin_price(market_hash_name, session)
-                time.sleep(2)  # Add delay after get_skin_price
+                time.sleep(3)  # Add delay after get_skin_price
                 if price is not None:
                     cell = worksheet.cell(row=row, column=4, value=price)
                     cell.number_format = f'#,##0.00\ "{currency_token}";[Red]\-#,##0.00\ "{currency_token}"'
@@ -128,8 +131,12 @@ for row in range(2, worksheet.max_row + 1):
                     last_updated_cell.value = datetime.now()
                     # Save the updated Excel file
                     workbook.save(excel_file_path)
+                else:
+                    print(f"Couldn't get Price for {skin_name}, please try again later")
+            else:
+                print("Couldn't get Market Hash Name, please try again later")
         else:
-            print("Skipping update for Item: " + skin_name + " as it was updated within the last 24 hours")
+            print(f"Skipping update for Item: {skin_name} as it was updated within the last {update_hours} hours")
 
 # Save the updated Excel file
 workbook.save(excel_file_path)
