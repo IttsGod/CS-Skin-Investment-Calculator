@@ -24,6 +24,8 @@ file_name: The name of the file (and the location, if your file is one directory
 
 currency: The Currency the Program checks. Currently supported: USD, GBP, EUR
 
+update_hours: The Hours, after which the Skins should be updated if the File is run. 
+
 ### Excel Setup
 
 The Excel file should be in the same folder as your executable.
