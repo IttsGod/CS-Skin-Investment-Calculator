@@ -32,12 +32,14 @@ The Excel file should be in the same folder as your executable.
 
 Use the Example File or create your own Excel File. It should look like this:
 
-![image](https://user-images.githubusercontent.com/91871891/229320140-3243f65e-8bda-485e-94af-a21a0ee247d3.png)
+![image](https://user-images.githubusercontent.com/91871891/230908601-e1579dc9-eede-416f-ac55-fc71508ddd98.png)
 
 Run the executable. If everything was successfull, it should look like this: 
 
-![image](https://user-images.githubusercontent.com/91871891/229320210-ceed2509-c01e-4df2-b6d3-d82cc391f303.png)
+![image](https://user-images.githubusercontent.com/91871891/230908561-15038877-1c42-4ab5-9d9c-618e6613683d.png)
 
+You can then use Excel to Calculate your whole Profit, whole Price, or something else in the Columns right to the timestamp
+The File will also create a second Spreadsheet, please do not change that.
 
 ## Building it yourself
 First, make sure you have Python 3 and pip installed.
