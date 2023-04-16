@@ -10,7 +10,7 @@ It does not require or send any User / Account Data.
 
 ## Usage
 
-Download the update.exe, and the settings.txt files from the latest release.
+Download the update.exe from the latest release.
 
 Now, create a Excel file containing your investments, Amounts and the buy price. Make sure the item name is the exact item name, otherwise it wont work!
 
