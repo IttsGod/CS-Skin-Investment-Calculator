@@ -17,16 +17,34 @@ global currency
 global currency_code
 global currency_token
 
-with open('settings.txt', 'r') as f:
-    for line in f:
-        if line.startswith('language'):
-            language = line.split('=')[1].strip()
-        elif line.startswith('file_name'):
-            file_name = line.split('=')[1].strip()
-        elif line.startswith('currency'):
-            currency = line.split('=')[1].strip()
-        elif line.startswith('update_hours'):
-            update_hours = int(line.split('=')[1].strip())
+
+try:
+    with open('settings.txt', 'r') as f:
+        for line in f:
+            if line.startswith('language'):
+                language = line.split('=')[1].strip()
+            elif line.startswith('file_name'):
+                file_name = line.split('=')[1].strip()
+            elif line.startswith('currency'):
+                currency = line.split('=')[1].strip()
+            elif line.startswith('update_hours'):
+                update_hours = int(line.split('=')[1].strip())
+except FileNotFoundError:
+    f = open("settings.txt", "w")
+    f.write("language=english\nfile_name=Investments.xlsx\ncurrency=EUR\nupdate_hours=24")
+    f.close()
+    print("Didnt find settings.txt. Created new Settings with default Config")
+    time.sleep(1)
+    with open('settings.txt', 'r') as f:
+        for line in f:
+            if line.startswith('language'):
+                language = line.split('=')[1].strip()
+            elif line.startswith('file_name'):
+                file_name = line.split('=')[1].strip()
+            elif line.startswith('currency'):
+                currency = line.split('=')[1].strip()
+            elif line.startswith('update_hours'):
+                update_hours = int(line.split('=')[1].strip())
 
 if currency.casefold() == "usd":
     currency_code = 1
@@ -66,6 +84,14 @@ excel_file_path = os.path.join(os.getcwd(), file_name)
 workbook = load_workbook(excel_file_path)
 worksheet = workbook.active
 
+
+# Check if the File is open right now
+try:
+    workbook.save(excel_file_path)
+except PermissionError:
+    print("Excel File is still open. Closing Excel File")
+    os.system("taskkill /f /im excel.exe")
+
 # Create a separate worksheet for storing market hash names
 if "MarketHashNames" not in workbook:
     market_hash_names_worksheet = workbook.create_sheet("MarketHashNames")
@@ -82,7 +108,6 @@ for row in range(2, worksheet.max_row + 1):
     if skin_name is not None:
         market_hash_name_cell = market_hash_names_worksheet.cell(row=row, column=2)
         market_hash_name = market_hash_name_cell.value
-
         # Check if the saved skin name in the MarketHashNames worksheet matches the skin name in the main table
         saved_skin_name_cell = market_hash_names_worksheet.cell(row=row, column=1)
         saved_skin_name = saved_skin_name_cell.value
@@ -118,15 +143,16 @@ for row in range(2, worksheet.max_row + 1):
                 if price is not None:
                     cell = worksheet.cell(row=row, column=4, value=price)
                     cell.number_format = f'#,##0.00\ "{currency_token}";[Red]\-#,##0.00\ "{currency_token}"'
-                    purchase_price = worksheet.cell(row=row, column=3).value
-                    profit = price - purchase_price
-                    profit_cell = worksheet.cell(row=row, column=5, value=profit)
+                    
+                    # Set formulas for profit per item and total profit per item
+                    profit_cell = worksheet.cell(row=row, column=5)
+                    profit_cell.value = f"=D{row}-C{row}"
                     profit_cell.number_format = f'#,##0.00\ "{currency_token}";[Red]\-#,##0.00\ "{currency_token}"'
-                    amount = worksheet.cell(row=row, column=2).value
-                    total_profit_per_item = profit * amount
-                    total_profit += total_profit_per_item
-                    total_profit_cell = worksheet.cell(row=row, column=6, value=total_profit_per_item)
+                    
+                    total_profit_cell = worksheet.cell(row=row, column=6)
+                    total_profit_cell.value = f"=E{row}*B{row}"
                     total_profit_cell.number_format = f'#,##0.00\ "{currency_token}";[Red]\-#,##0.00\ "{currency_token}"'
+
                     print("Successfully got Price for " + skin_name)
                     last_updated_cell.value = datetime.now()
                     # Save the updated Excel file
